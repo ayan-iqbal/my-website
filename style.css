@@ -6,6 +6,11 @@
     font-family: Arial, sans-serif;
 }
 
+body {
+  overflow-x: hidden;
+}
+
+
 /* LOGO */
 .logo {
   font-size: 26px;
@@ -37,14 +42,22 @@ body {
   scroll-behavior: smooth;
 }
 
-/* NAVBAR */
 .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 18px 40px;
-    background-color: #0f172a;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 40px;
+  background-color: #0f172a;
+  flex-wrap: wrap; /* 🔥 VERY IMPORTANT */
 }
+
+.auth {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
 
 .menu { 
   list-style: none; 
@@ -72,6 +85,7 @@ body {
   border: none;
   font-size: 14px;
   transition: 0.3s;
+  white-space: nowrap;
 }
 
 .login-btn {
@@ -781,3 +795,30 @@ body {
     align-items: center;
   }
 }
+
+@media (max-width: 768px) {
+
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 15px 20px;
+  }
+
+  .logo {
+    margin-bottom: 10px;
+  }
+
+  .menu {
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .auth {
+    width: 100%;
+    margin-top: 12px;
+    justify-content: flex-start;
+  }
+
+}
+
