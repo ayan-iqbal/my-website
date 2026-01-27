@@ -13,7 +13,14 @@ links.forEach(link => {
 // ===============================
 document.addEventListener("DOMContentLoaded", () => {
 
-  // ===============================
+  const shopNowBtn = document.getElementById("shopNowBtn");
+  if (shopNowBtn) {
+    shopNowBtn.addEventListener("click", () => {
+      window.location.href = "product.html";
+    });
+  }
+
+    // ===============================
   // LOGIN / SIGNUP MODALS
   // ===============================
   const loginBtn = document.querySelector(".login-btn");
@@ -78,7 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const savedUser = JSON.parse(localStorage.getItem("user"));
 
-      if (!savedUser) {
+ if (!savedUser) {
         alert("No account found");
         return;
       }
@@ -96,6 +103,60 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  const cartBtn = document.querySelector(".cart-btn");
+  const cartCount = document.getElementById("cart-count");
+  const addToCartBtns = document.querySelectorAll(".add-to-cart-btn");
+  const loginModal = document.getElementById("loginModal");
+
+  // ===== INIT CART =====
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  if (cartCount) updateCartCount();
+
+  // ===== ADD TO CART =====
+  if (addToCartBtns.length > 0) {
+    addToCartBtns.forEach(btn => {
+      btn.addEventListener("click", () => {
+if (localStorage.getItem("loggedIn") !== "true") {
+          alert("Please login to add items to cart");
+          if (loginModal) loginModal.style.display = "flex";
+          return;
+        }
+
+        const product = {
+          id: btn.dataset.id || btn.innerText,  // fallback
+          name: btn.dataset.name || btn.innerText,
+          price: btn.dataset.price || "0",
+          image: btn.dataset.image || "",
+          quantity: 1
+        };
+
+        const existing = cart.find(item => item.id === product.id);
+
+        if (existing) {
+          existing.quantity++;
+        } else {
+          cart.push(product);
+        }
+
+        localStorage.setItem("cart", JSON.stringify(cart));
+        if (cartCount) updateCartCount();
+        alert("Product added to cart ✔");
+      });
+    });
+  }
+
+  // ===== UPDATE COUNT =====
+  function updateCartCount() {
+    let total = cart.reduce((sum, item) => sum + item.quantity, 0);
+    if (cartCount) cartCount.innerText = total;
+  }
+
+});
+
   // ===============================
   // SHOP NOW BUTTON
   // ===============================
@@ -105,6 +166,7 @@ document.addEventListener("DOMContentLoaded", () => {
       window.location.href = "product.html";
     });
   }
+
 
   // ===============================
   // WHY CARDS
@@ -139,7 +201,8 @@ document.addEventListener("DOMContentLoaded", () => {
       newsletterForm.reset();
     });
   }
-
+  
+document.addEventListener("DOMContentLoaded", () => {
   // ===============================
   // CONTACT FORM
   // ===============================
@@ -158,7 +221,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const year = document.getElementById("year");
   if (year) year.textContent = new Date().getFullYear();
 
-});
+  });
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -182,7 +245,7 @@ document.addEventListener("DOMContentLoaded", () => {
           return;
         }
 
-        const product = {
+const product = {
           id: btn.dataset.id || btn.innerText,  // fallback
           name: btn.dataset.name || btn.innerText,
           price: btn.dataset.price || "0",
@@ -205,7 +268,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // ===== CART BUTTON CLICK =====
+   // ===== CART BUTTON CLICK =====
   if (cartBtn) {
     cartBtn.addEventListener("click", () => {
       if (localStorage.getItem("loggedIn") === "true") {
@@ -224,3 +287,4 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 });
+// 
